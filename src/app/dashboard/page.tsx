@@ -1,4 +1,4 @@
-import LogoPic from "@/components/logo/LogoPic"
+import LogoPic from "@/components/Logo/LogoPic"
 
 const DashboardPage = () => {
   return (

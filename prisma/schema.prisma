@@ -1,0 +1,68 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+  schemas  = ["CookieMan", "prj"]
+}
+
+model Localizations {
+  id_localization    Int         @id(map: "PK_Localizations") @default(autoincrement())
+  localization_code  String      @db.VarChar(16)
+  localization_title String      @db.VarChar(64)
+  is_default         Boolean
+  Resources          Resources[]
+
+  @@schema("prj")
+}
+
+model Resources {
+  id_resources       Int            @id(map: "PK_Resources") @default(autoincrement())
+  resource_extension String?        @db.VarChar(128)
+  id_localization    Int?
+  page_keys          String?        @db.VarChar(2048)
+  resource_key       String         @db.VarChar(128)
+  resource_value     String         @db.VarChar(4096)
+  directive_key      String?        @db.VarChar(128)
+  directive_value    String?        @db.VarChar(4096)
+  Localizations      Localizations? @relation(fields: [id_localization], references: [id_localization], onDelete: NoAction, onUpdate: NoAction, map: "FK_Resources_Localizations")
+
+  @@schema("prj")
+}
+
+model Tcf22_Row_Data {
+  id_row_data      Int     @id(map: "PK_Tcf22_Row_Data") @default(autoincrement())
+  row_data_type    String? @db.VarChar(16)
+  row_data_version Int?
+  row_data_json    String? @db.VarChar(Max)
+
+  @@schema("CookieMan")
+}
+
+model Tcf22_Vendors {
+  id_vendor                       Int       @id(map: "PK_Tcf22_Vendors") @default(autoincrement())
+  vendor_tcf_id                   Int
+  vendor_version                  String    @db.VarChar(32)
+  vendor_tcf_policy_version       String?   @db.VarChar(64)
+  ids_consent_purpose             String?   @db.VarChar(4096)
+  ids_legitimate_interest_purpose String?   @db.VarChar(4096)
+  ids_special_purpose             String?   @db.VarChar(4096)
+  ids_feature                     String?   @db.VarChar(4096)
+  ids_data_declaration            String?   @db.VarChar(4096)
+  ids_special_feature             String?   @db.VarChar(4096)
+  vendor_name                     String?   @db.VarChar(1024)
+  vendor_cookie_max_age           BigInt?
+  vendor_use_cookies              Boolean?
+  vendor_cookie_refresh           Boolean?
+  vendor_uses_non_cookie_access   Boolean?
+  vendor_deleted_date             DateTime? @db.Date
+  vendor_storage_disclosure_url   String?   @db.VarChar(4096)
+  vendor_standard_data_retention  String?   @db.VarChar(32)
+  vendor_data_retention           String?   @db.VarChar(Max)
+  vendor_urls                     String?   @db.VarChar(Max)
+
+  @@schema("CookieMan")
+}

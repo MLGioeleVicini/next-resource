@@ -1,5 +1,5 @@
 import Link from "next/link";
-import LogoPic from "./logo/LogoPic";
+import LogoPic from "../Logo/LogoPic";
 
 const Navbar = () => {
     return (
