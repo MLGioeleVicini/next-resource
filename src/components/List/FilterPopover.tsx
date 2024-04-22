@@ -12,8 +12,14 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import FilterIcon from "./icons/FilterIcon";
-import { STATUSES } from "../data";
-import { ColorIcon } from "./StatusCell";
+import { Localizations, PrismaClient } from "@prisma/client"
+
+
+const prisma = new PrismaClient()
+
+async function getLocalizations(){
+  return await prisma.localizations.findMany()
+}
 
 const StatusItem = ({ status, setColumnFilters, isActive }) => (
   <Flex
@@ -49,14 +55,16 @@ const StatusItem = ({ status, setColumnFilters, isActive }) => (
       })
     }
   >
-    <ColorIcon color={status.color} mr={3} />
     {status.name}
   </Flex>
 );
 
-const FilterPopover = ({ columnFilters, setColumnFilters }) => {
+const FilterPopover = async ({ columnFilters, setColumnFilters }) => {
   const filterStatuses =
     columnFilters.find((f) => f.id === "status")?.value || [];
+
+    const localizations: Array<Localizations> = await getLocalizations();
+
 
   return (
     <Popover isLazy>
@@ -80,12 +88,12 @@ const FilterPopover = ({ columnFilters, setColumnFilters }) => {
             Status
           </Text>
           <VStack align="flex-start" spacing={1}>
-            {STATUSES.map((status) => (
+            {localizations.map((localization) => (
               <StatusItem
-                status={status}
-                isActive={filterStatuses.includes(status.id)}
+                status={localization}
+                isActive={filterStatuses.includes(localization.id_localization)}
                 setColumnFilters={setColumnFilters}
-                key={status.id}
+                key={localization.id_localization}
               />
             ))}
           </VStack>

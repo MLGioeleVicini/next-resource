@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from "react";
 import { Box, Button, ButtonGroup, Icon, Text } from "@chakra-ui/react";
 import {
@@ -8,10 +10,9 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import DATA from "../data.json";
+import DATA from "./data";
 import EditableCell from "./EditableCell";
 import StatusCell from "./StatusCell";
-import DateCell from "./DateCell";
 import Filters from "./Filters";
 import SortIcon from "./icons/SortIcon";
 
@@ -39,7 +40,7 @@ const columns = [
   {
     accessorKey: "due",
     header: "Due",
-    cell: DateCell,
+    cell: EditableCell,
   },
   {
     accessorKey: "notes",
