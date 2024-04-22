@@ -12,9 +12,8 @@ const StatusCell = async ({ getValue, row, column, table }) => {
   const { name, color } = getValue() || {};
   const { updateData } = table.options.meta;
 
-  const localizations: Array<Localizations> = await getLocalizations();
+  const localizations: Array<Localizations> = await prisma.localizations.findMany()
 
-  console.warn(localizations)
   return (
     <Menu isLazy offset={[0, 0]} flip={false} autoSelect={false}>
       <MenuButton
