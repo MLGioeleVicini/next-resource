@@ -12,7 +12,7 @@ const fontSans = FontSans({
 });
 
 export const metadata: Metadata = {
-    title: 'NextResources?',
+    title: 'NextResource?',
     description: 'Creato da Gioele Vicini',
 };
 
