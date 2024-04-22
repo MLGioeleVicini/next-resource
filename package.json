@@ -9,7 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.8.2",
     "@prisma/client": "^5.12.1",
+    "@tanstack/react-table": "^8.16.0",
     "next": "14.2.1",
     "prisma": "^5.12.1",
     "react": "^18",
