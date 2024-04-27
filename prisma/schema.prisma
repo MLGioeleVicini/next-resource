@@ -28,6 +28,7 @@ model Resources {
   resource_value     String         @db.VarChar(4096)
   directive_key      String?        @db.VarChar(128)
   directive_value    String?        @db.VarChar(4096)
+  last_modified      DateTime       @default(now(), map: "DF_Resources_last_modified") @db.DateTime
   Localizations      Localizations? @relation(fields: [id_localization], references: [id_localization], onDelete: NoAction, onUpdate: NoAction, map: "FK_Resources_Localizations")
 
   @@schema("prj")
