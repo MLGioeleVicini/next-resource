@@ -1,5 +1,6 @@
 'use client';
 
+import EditableCell from '@/components/List/EditableCell';
 import { Button } from '@/components/ui/button';
 import { Resources } from '@prisma/client';
 import { ColumnDef } from '@tanstack/react-table';
@@ -32,6 +33,7 @@ export const columns: ColumnDef<Resources>[] = [
     {
         header: 'Resource Value',
         accessorKey: 'resource_value',
+        cell: EditableCell,
     },
     {
         header: 'Ultimo aggiornamento',

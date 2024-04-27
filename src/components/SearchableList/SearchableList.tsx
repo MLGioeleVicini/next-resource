@@ -23,7 +23,7 @@ import {
 } from '@/components/ui/table';
 
 import { Button } from '@/components/ui/button';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Input } from '../ui/input';
 import {
     DropdownMenu,
@@ -33,6 +33,7 @@ import {
     DropdownMenuLabel,
     DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
+import { Resources } from '@prisma/client';
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -49,9 +50,13 @@ export function DataTable<TData, TValue>({
         {}
     );
 
+    const initialData: TData[] = data;
+    const [dataManagable, setDataManagable] = useState(initialData);
+    const columnsMemo = useMemo<ColumnDef<TData, TValue>[]>(columns, []);
+
     const table = useReactTable({
-        data,
-        columns,
+        dataManagable,
+        columnsMemo,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
         getSortedRowModel: getSortedRowModel(),
@@ -66,7 +71,25 @@ export function DataTable<TData, TValue>({
             columnFilters,
             columnVisibility,
         },
+
+        meta: {
+            updateData: (rowIndex, columnId, value): any => {
+                setDataManagable((old) =>
+                    old.map((row, index) => {
+                        if (index === rowIndex) {
+                            return {
+                                ...old[rowIndex]!,
+                                [columnId]: value,
+                            };
+                        }
+                        return row;
+                    })
+                );
+            },
+        },
     });
+
+    console.log(data);
 
     return (
         <div>
