@@ -13,6 +13,8 @@ const EditableCell = ({
 
     const onBlur = () => {
         table.options.meta?.updateData(index, id, value);
+
+        
     };
 
     useEffect(() => {
