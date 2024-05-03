@@ -1,6 +1,6 @@
-
 import { useEffect, useState } from 'react';
 import { Input } from '../ui/input';
+import axios from 'axios';
 
 const EditableCell = ({
     getValue,
@@ -13,8 +13,6 @@ const EditableCell = ({
 
     const onBlur = () => {
         table.options.meta?.updateData(index, id, value);
-
-
     };
 
     useEffect(() => {

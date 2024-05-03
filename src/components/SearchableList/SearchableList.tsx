@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import {
     ColumnDef,
@@ -31,6 +31,7 @@ import {
     DropdownMenuContent,
     DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
+import axios from 'axios';
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -43,14 +44,22 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
     const [data, setData] = useState(initialData);
 
-    console.log(data[0]);
-console.log('renderizzato qui')
-
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(
         {}
     );
+
+    async function UpdateDBData(rowIndex, columnId, value) {
+        let resource = data[rowIndex];
+
+        resource = {
+            ...resource!,
+            [columnId]: value,
+        };
+
+        await console.log(axios.patch('/api/resources', resource));
+    }
 
     const table = useReactTable({
         data,
@@ -71,22 +80,11 @@ console.log('renderizzato qui')
         },
 
         meta: {
-            updateData: (rowIndex, columnId, value): any => {
-                setData((old) =>
-                    old.map((row, index) => {
-                        if (index === rowIndex) {
-                            return {
-                                ...old[rowIndex]!,
-                                [columnId]: value,
-                            };
-                        }
-                        return row;
-                    })
-                );
+            updateData: async (rowIndex, columnId, value): any => {
+                await UpdateDBData(rowIndex, columnId, value);
             },
         },
     });
-
 
     return (
         <div>
