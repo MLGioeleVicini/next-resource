@@ -1,6 +1,6 @@
-'use client';
+"use client"
 
-import EditableCell from '@/components/List/EditableCell';
+import EditableCell from '@/components/SearchableList/EditableCell';
 import { Button } from '@/components/ui/button';
 import { Resources } from '@prisma/client';
 import { ColumnDef } from '@tanstack/react-table';

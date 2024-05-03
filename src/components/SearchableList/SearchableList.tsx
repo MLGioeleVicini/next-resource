@@ -1,5 +1,3 @@
-'use client';
-
 import {
     ColumnDef,
     ColumnFiltersState,
@@ -43,7 +41,8 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
     const [data, setData] = useState(initialData);
 
-    //console.log(data);
+    console.log(data[0]);
+console.log('renderizzato qui')
 
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);

@@ -1,6 +1,6 @@
+
 import { useEffect, useState } from 'react';
 import { Input } from '../ui/input';
-import { Button } from '../ui/button';
 
 const EditableCell = ({
     getValue,
@@ -14,7 +14,7 @@ const EditableCell = ({
     const onBlur = () => {
         table.options.meta?.updateData(index, id, value);
 
-        
+
     };
 
     useEffect(() => {
