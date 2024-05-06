@@ -36,7 +36,18 @@ export const columns: ColumnDef<Resources>[] = [
         cell: EditableCell,
     },
     {
-        header: 'Ultimo aggiornamento',
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant='ghost'
+                    onClick={() => {
+                        column.toggleSorting(column.getIsSorted() === 'asc');
+                    }}
+                >
+                    Ultimo aggiornamento +-
+                </Button>
+            );
+        },
         accessorKey: 'last_modified',
         cell: ({ row }) => {
             const date = row.getValue('last_modified');

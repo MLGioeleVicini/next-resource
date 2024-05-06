@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import prisma from '../../../../prisma/client';
+import moment from 'moment';
 
 const createResourceSchema = z.object({
     resource_key: z.string().min(1).max(255),
@@ -45,6 +46,7 @@ export async function PATCH(req: NextRequest) {
         },
         data: {
             resource_value: body.resource_value,
+            last_modified: moment().toISOString(),
         },
     });
 
