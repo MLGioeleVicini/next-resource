@@ -25,10 +25,12 @@ export const columns: ColumnDef<Resources>[] = [
     {
         header: 'Page',
         accessorKey: 'page_keys',
+        cell: EditableCell,
     },
     {
         header: 'Resource Key',
         accessorKey: 'resource_key',
+        cell: EditableCell,
     },
     {
         header: 'Resource Value',
